@@ -28,25 +28,6 @@ def home():
 def api_data():
     return jsonify(D)
 
-
-@app.route("/api/search", methods=["GET"])
-def search():
-    pass
-
-
-@app.route("/api/url", methods=["GET"])
-def get_url():
-    pass
-
-
-@app.route("/api/health")
-def health():
-    return jsonify({"ok": True})
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
-
 TURBO_MAKES = D["turbo_makes"]
 TURBO_MAKE_MODELS = D["turbo_make_models"]
 TURBO_COLORS = D["turbo_colors"]
