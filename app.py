@@ -41,7 +41,21 @@ AB_COLORS = D["ab_colors"]
 
 TURBO_TO_BAKU_CITY = D["turbo_to_baku_city"]
 
-scraper = cloudscraper.create_scraper()
+scraper = cloudscraper.create_scraper(
+    browser={
+        "browser": "chrome",
+        "platform": "windows",
+        "desktop": True
+    }
+)
+
+scraper.headers.update({
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+})
 
 
 def build_turbo_url(
@@ -236,7 +250,15 @@ def get_total_pages(soup):
 
 def scrape_turbo(url, make="", model=""):
     try:
-        resp = scraper.get(url, timeout=(5, 15))
+              resp = scraper.get(
+            url,
+            timeout=(5, 15),
+            headers={
+                "User-Agent": scraper.headers.get("User-Agent"),
+                "Referer": "https://turbo.az/",
+                "Accept-Language": "en-US,en;q=0.9",
+            }
+        )
     except Exception as e:
         raise RuntimeError(f"Turbo.az request failed: {e}")
 
